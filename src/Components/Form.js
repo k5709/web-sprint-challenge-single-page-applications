@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 function Form(props) {
     const { change, submit, values, disabled, errors } = props;
-    console.log(errors)
+    // console.log(errors)
     const history = useHistory()
 
 
@@ -27,8 +27,8 @@ function Form(props) {
         <form id='pizza-form' className='form-container' onSubmit={onSubmit}>
             <div className='form-group submit'>
                 <div className='errors'>
-                    <p>{errors.person}</p>
-                    <p>{errors.size}</p>
+                    <p>{errors.customerName}</p>
+                    <p>{errors.pizzaSize}</p>
                 </div>
                 <h2>Build a Custom Pizza!</h2>
                 <button id='order-button' onSubmit={onSubmit}>submit</button>
@@ -40,7 +40,7 @@ function Form(props) {
                         <input
                             type='text'
                             id='name-input'
-                            value={values.person}
+                            defaultValue={values.person}
                             onChange={onChange}
                             name='customerName'
                         />
