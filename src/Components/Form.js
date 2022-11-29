@@ -4,21 +4,19 @@ import { useHistory } from 'react-router-dom';
 
 
 function Form(props) {
-    const { change, submit, values } = props;
-
-    console.log();
-
+    const { change, submit, values, disabled, errors } = props;
+    console.log(errors)
     const history = useHistory()
 
 
     const onSubmit = (evt) => {
         evt.preventDefault();
         submit();
-        history.push('./form/confirmation')
+        history.push('./order/confirmation')
     }
 
     const onChange = (evt) => {
-        const { name, value, checked, type } = evt.target.value;
+        const { name, value, checked, type } = evt.target;
         const newVal = type === 'checkbox' ? checked : value;
         change(name, newVal);
     }
@@ -28,14 +26,15 @@ function Form(props) {
 
         <form id='pizza-form' className='form-container' onSubmit={onSubmit}>
             <div className='form-group submit'>
-                <h2>Build a Custom Pizza!</h2>
-                <button id='order-button' value={onSubmit}>submit</button>
                 <div className='errors'>
-
+                    <p>{errors.person}</p>
+                    <p>{errors.size}</p>
                 </div>
+                <h2>Build a Custom Pizza!</h2>
+                <button id='order-button' onSubmit={onSubmit}>submit</button>
 
                 <div className='form-group inputs'>
-                    <h4>Order Details</h4>
+                    <h4>Customer Name:</h4>
 
                     <label>
                         <input
@@ -51,7 +50,7 @@ function Form(props) {
                         <select
                             id='size-dropdown'
                             onChange={onChange}
-                            value={values.size}
+                            defaultValue={values.size}
                             name='pizzaSize'
                         >
                             <option value='pizzaSelection'>-- Select a Pizza size --</option>
@@ -70,7 +69,7 @@ function Form(props) {
                         <input
                             type='checkbox'
                             name='pepperoni'
-                            checked={values.pepperoni}
+                            defaultChecked={values.pepperoni}
                             onChange={onChange}
                         />
                     </label>
@@ -79,7 +78,7 @@ function Form(props) {
                         <input
                             type='checkbox'
                             name='sausage'
-                            checked={values.sausage}
+                            defaultChecked={values.sausage}
                             onChange={onChange}
                         />
                     </label>
@@ -88,7 +87,7 @@ function Form(props) {
                         <input
                             type='checkbox'
                             name='peppers'
-                            checked={values.peppers}
+                            defaultChecked={values.peppers}
                             onChange={onChange}
                         />
                     </label>
@@ -97,7 +96,7 @@ function Form(props) {
                         <input
                             type='checkbox'
                             name='mushrooms'
-                            checked={values.mushrooms}
+                            defaultChecked={values.mushrooms}
                             onChange={onChange}
                         />
                     </label>
@@ -107,12 +106,13 @@ function Form(props) {
                     <label>Special Instructions
                         <input
                             id='special-text'
-                            value={values.special}
+                            defaultValue={values.special}
                             onChange={onChange}
                             name='special'
                             type='text'
                         />
                     </label>
+
                 </div>
             </div>
         </form>

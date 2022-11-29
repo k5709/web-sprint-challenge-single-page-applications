@@ -4,8 +4,14 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import { Link, Switch } from 'react-router-dom'
 
+//components
 import Home from "./Components/home";
 import Form from "./Components/Form";
+import Confirmation from "./Components/Confirmation"
+
+//validation/schema
+import Schema from "./Components/Validation/Schema";
+import * as yup from 'yup'
 
 const initialFormValues = {
   person: '',
@@ -17,38 +23,54 @@ const initialFormValues = {
   special: "",
 }
 
-// const initialDisabled = true;
+const initialDisabled = true;
 
-// const initialFormErrors = {
-//   person: '',
-//   size: '',
-// }
+const initialFormErrors = {
+  person: '',
+  size: '',
+  special: ''
+}
 
 
 function App() {
-  // const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [formValues, setFormValues] = useState(initialFormValues);
-  // const [disabled, setDisabled] = useState(initialDisabled)
+  const [confirmation, setConfirmation] = useState(initialDisabled)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
-
-  const inputChange = (evt) => {
-    const { name, value } = evt.target;
-    setFormValues({
-      ...formValues,
-      [name]: value
-    }
-    );
+  const setNewOrder = (newOrder) => {
+    setConfirmation(newOrder)
+    setFormValues(initialFormValues)
   }
 
-  // const submit = (evt) => {
-  //   evt.preventDefault()
-  //   const newCustomer = {
-  //     personName: formValues.person.trim(),
-  //     pizzaSize: formValues.size.trim()
-  //   }
+  const validate = (name, value) => {
+    yup.reach(Schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: '' }))
+      .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
+  }
 
-  // }
+  const handleChange = (name, value) => {
+    validate(name, value)
+    setFormValues({ ...setFormValues, [name]: value })
+  }
 
+  const formSubmit = (evt) => {
+    const newOrder = {
+      personName: formValues.person,
+      pizzaSize: formValues.size,
+      pepperoni: formValues.pepperoni,
+      sausage: formValues.sausage,
+      mushrooms: formValues.mushrooms,
+      peppers: formValues.peppers
+    };
+    setNewOrder(newOrder)
+  }
+
+
+  // useEffect(() => {
+  //   Schema.isValid(formValues).then(valid => setDisabled(!valid))
+  // }, formValues)
 
   return (
     <div className="container">
@@ -66,9 +88,14 @@ function App() {
         <Route path="/pizza">
           <Form
             values={formValues}
-            change={inputChange}
-            submit={submit}
+            change={handleChange}
+            errors={formErrors}
+            disabled="true"
+            submit={formSubmit}
           />
+        </Route>
+        <Route path='/order/confirmation'>
+          {/* <Confirmation /> */}
         </Route>
         <Route path='/'>
           <Home />
@@ -77,5 +104,6 @@ function App() {
     </div>
   );
 };
+
 export default App;
 
