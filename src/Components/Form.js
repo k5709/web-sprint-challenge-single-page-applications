@@ -49,6 +49,7 @@ function Form(props) {
                             onChange={onChange}
                             defaultValue={values.size}
                             name='pizzaSize'
+                            data-test-id='pizzaSize'
                         >
                             <option value='pizzaSelection'>-- Select a Pizza size --</option>
                             <option value='extra-small'>Extra Small</option>
@@ -68,6 +69,7 @@ function Form(props) {
                             name='pepperoni'
                             defaultChecked={values.pepperoni}
                             onChange={onChange}
+                            data-test-id='pepperoni'
                         />
                     </label>
 
