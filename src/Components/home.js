@@ -6,7 +6,7 @@ export default function Home() {
     return (
         <div>
             <Link to='/pizza'>
-                <button id='order-button'>
+                <button id='order-pizza'>
                     Place your Order Here!
                 </button>
             </Link>

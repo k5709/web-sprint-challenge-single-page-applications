@@ -95,7 +95,7 @@ function App() {
           />
         </Route>
         <Route path='/order/confirmation'>
-          {/* <Confirmation /> */}
+          <Confirmation />
         </Route>
         <Route path='/'>
           <Home />

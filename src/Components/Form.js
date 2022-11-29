@@ -26,17 +26,14 @@ function Form(props) {
 
         <form id='pizza-form' className='form-container' onSubmit={onSubmit}>
             <div className='form-group submit'>
-                <div className='errors'>
-                    <p>{errors.customerName}</p>
-                    <p>{errors.pizzaSize}</p>
-                </div>
+
                 <h2>Build a Custom Pizza!</h2>
                 <button id='order-button' onSubmit={onSubmit}>submit</button>
 
                 <div className='form-group inputs'>
                     <h4>Customer Name:</h4>
 
-                    <label>
+                    <label> <p>{errors.customerName}</p>
                         <input
                             type='text'
                             id='name-input'
@@ -46,7 +43,7 @@ function Form(props) {
                         />
                     </label>
 
-                    <label>
+                    <label> <p>{errors.pizzaSize}</p>
                         <select
                             id='size-dropdown'
                             onChange={onChange}
